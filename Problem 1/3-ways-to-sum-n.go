@@ -20,8 +20,6 @@ func sum_to_n_c(n int) int {
 	// O(n) time complexity from recursing down to 1
 	if n == 0 {
 		return 0
-	} else if n == 1 {
-		return 1
 	} else {
 		return n + sum_to_n_c(n-1)
 	}
