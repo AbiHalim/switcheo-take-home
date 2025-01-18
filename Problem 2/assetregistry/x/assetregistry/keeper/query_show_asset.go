@@ -22,5 +22,5 @@ func (k Keeper) ShowAsset(goCtx context.Context, req *types.QueryShowAssetReques
         return nil, sdkerrors.ErrKeyNotFound
     }
 
-    return &types.QueryShowAssetResponse{Asset: &asset}, nil
+    return &types.QueryShowAssetResponse{Asset: asset}, nil
 }
