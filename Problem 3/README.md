@@ -7,3 +7,5 @@ Then, the Worker Service will dequeue transactions from the persistent queue and
 If an admin wants to retry a failed transaction, they send a POST request to /transaction/retry with the transaction ID of a failed transaction in the request body. When this endpoint is called, the service retrieves the transaction details from the database, requeues the transaction, and triggers the worker to retry broadcasting it. This makes sure that manual intervention is possible for transactions that could not be successfully broadcasted after automatic retries.
 
 Additionally, the service allows for a GET request to be sent to /transaction/status allowing admins to check the status of transactions. Clients can pass a transaction ID as a query parameter to retrieve detailed information about a specific transaction, including its type, data, current status, number of retries, and timestamps. To make it more user friendly for admins, an admin interface can be implemented with a simple UI made in React.
+
+![Screenshot 2025-01-18 at 11 50 47 PM](https://github.com/user-attachments/assets/296b9701-611c-4f8a-8906-1e41fa025051)
