@@ -25,6 +25,11 @@ func (k msgServer) UpdateAsset(goCtx context.Context, msg *types.MsgUpdateAsset)
     return nil, errorsmod.Wrap(sdkerrors.ErrUnauthorized, "only the owner can update the asset")
   }
 
+  // Enforce minimum value requirement
+  if msg.Value < 100 {
+    return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "value must be at least 100")
+  }
+
   // Create an updated asset instance
   updatedAsset := types.Asset{
     Id:          msg.Id,
