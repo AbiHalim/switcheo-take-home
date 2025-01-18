@@ -17,6 +17,13 @@ message Asset {
 ```
 
 ---
+## Running the application
+From the assetregistry folder:
+```bash
+ignite chain build; ignite chain serve
+```
+
+---
 ## CRUD Operations
 You can create new assets, read a list of all assets or details of one asset, update the details of an asset, and delete assets. For example:
 ```bash
