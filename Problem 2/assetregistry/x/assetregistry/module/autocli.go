@@ -17,6 +17,20 @@ func (am AppModule) AutoCLIOptions() *autocliv1.ModuleOptions {
 					Use:       "params",
 					Short:     "Shows the parameters of the module",
 				},
+				{
+					RpcMethod:      "ShowAsset",
+					Use:            "show-asset [id]",
+					Short:          "Query show-asset",
+					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "id"}},
+				},
+
+				{
+					RpcMethod:      "ListAsset",
+					Use:            "list-asset",
+					Short:          "Query list-asset",
+					PositionalArgs: []*autocliv1.PositionalArgDescriptor{},
+				},
+
 				// this line is used by ignite scaffolding # autocli/query
 			},
 		},
@@ -27,6 +41,24 @@ func (am AppModule) AutoCLIOptions() *autocliv1.ModuleOptions {
 				{
 					RpcMethod: "UpdateParams",
 					Skip:      true, // skipped because authority gated
+				},
+				{
+					RpcMethod:      "CreateAsset",
+					Use:            "create-asset [name] [description] [owner] [value]",
+					Short:          "Send a create-asset tx",
+					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "name"}, {ProtoField: "description"}, {ProtoField: "owner"}, {ProtoField: "value"}},
+				},
+				{
+					RpcMethod:      "UpdateAsset",
+					Use:            "update-asset [id] [name] [description] [owner] [value]",
+					Short:          "Send a update-asset tx",
+					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "id"}, {ProtoField: "name"}, {ProtoField: "description"}, {ProtoField: "owner"}, {ProtoField: "value"}},
+				},
+				{
+					RpcMethod:      "DeleteAsset",
+					Use:            "delete-asset [id]",
+					Short:          "Send a delete-asset tx",
+					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "id"}},
 				},
 				// this line is used by ignite scaffolding # autocli/tx
 			},

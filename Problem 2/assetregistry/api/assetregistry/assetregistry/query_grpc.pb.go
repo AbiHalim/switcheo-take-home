@@ -8,7 +8,6 @@ package assetregistry
 
 import (
 	context "context"
-
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -20,7 +19,9 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Query_Params_FullMethodName = "/assetregistry.assetregistry.Query/Params"
+	Query_Params_FullMethodName    = "/assetregistry.assetregistry.Query/Params"
+	Query_ShowAsset_FullMethodName = "/assetregistry.assetregistry.Query/ShowAsset"
+	Query_ListAsset_FullMethodName = "/assetregistry.assetregistry.Query/ListAsset"
 )
 
 // QueryClient is the client API for Query service.
@@ -29,6 +30,10 @@ const (
 type QueryClient interface {
 	// Parameters queries the parameters of the module.
 	Params(ctx context.Context, in *QueryParamsRequest, opts ...grpc.CallOption) (*QueryParamsResponse, error)
+	// Queries a list of ShowAsset items.
+	ShowAsset(ctx context.Context, in *QueryShowAssetRequest, opts ...grpc.CallOption) (*QueryShowAssetResponse, error)
+	// Queries a list of ListAsset items.
+	ListAsset(ctx context.Context, in *QueryListAssetRequest, opts ...grpc.CallOption) (*QueryListAssetResponse, error)
 }
 
 type queryClient struct {
@@ -48,12 +53,34 @@ func (c *queryClient) Params(ctx context.Context, in *QueryParamsRequest, opts .
 	return out, nil
 }
 
+func (c *queryClient) ShowAsset(ctx context.Context, in *QueryShowAssetRequest, opts ...grpc.CallOption) (*QueryShowAssetResponse, error) {
+	out := new(QueryShowAssetResponse)
+	err := c.cc.Invoke(ctx, Query_ShowAsset_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *queryClient) ListAsset(ctx context.Context, in *QueryListAssetRequest, opts ...grpc.CallOption) (*QueryListAssetResponse, error) {
+	out := new(QueryListAssetResponse)
+	err := c.cc.Invoke(ctx, Query_ListAsset_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // QueryServer is the server API for Query service.
 // All implementations must embed UnimplementedQueryServer
 // for forward compatibility
 type QueryServer interface {
 	// Parameters queries the parameters of the module.
 	Params(context.Context, *QueryParamsRequest) (*QueryParamsResponse, error)
+	// Queries a list of ShowAsset items.
+	ShowAsset(context.Context, *QueryShowAssetRequest) (*QueryShowAssetResponse, error)
+	// Queries a list of ListAsset items.
+	ListAsset(context.Context, *QueryListAssetRequest) (*QueryListAssetResponse, error)
 	mustEmbedUnimplementedQueryServer()
 }
 
@@ -63,6 +90,12 @@ type UnimplementedQueryServer struct {
 
 func (UnimplementedQueryServer) Params(context.Context, *QueryParamsRequest) (*QueryParamsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Params not implemented")
+}
+func (UnimplementedQueryServer) ShowAsset(context.Context, *QueryShowAssetRequest) (*QueryShowAssetResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ShowAsset not implemented")
+}
+func (UnimplementedQueryServer) ListAsset(context.Context, *QueryListAssetRequest) (*QueryListAssetResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListAsset not implemented")
 }
 func (UnimplementedQueryServer) mustEmbedUnimplementedQueryServer() {}
 
@@ -95,6 +128,42 @@ func _Query_Params_Handler(srv interface{}, ctx context.Context, dec func(interf
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Query_ShowAsset_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryShowAssetRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).ShowAsset(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Query_ShowAsset_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).ShowAsset(ctx, req.(*QueryShowAssetRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Query_ListAsset_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryListAssetRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).ListAsset(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Query_ListAsset_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).ListAsset(ctx, req.(*QueryListAssetRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Query_ServiceDesc is the grpc.ServiceDesc for Query service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -105,6 +174,14 @@ var Query_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Params",
 			Handler:    _Query_Params_Handler,
+		},
+		{
+			MethodName: "ShowAsset",
+			Handler:    _Query_ShowAsset_Handler,
+		},
+		{
+			MethodName: "ListAsset",
+			Handler:    _Query_ListAsset_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
