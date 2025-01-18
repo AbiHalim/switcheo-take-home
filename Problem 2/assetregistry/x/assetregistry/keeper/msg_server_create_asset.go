@@ -6,6 +6,7 @@ import (
   sdk "github.com/cosmos/cosmos-sdk/types"
 
   "assetregistry/x/assetregistry/types"
+  sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
 
 func (k msgServer) CreateAsset(goCtx context.Context, msg *types.MsgCreateAsset) (*types.MsgCreateAssetResponse, error) {
@@ -13,7 +14,7 @@ func (k msgServer) CreateAsset(goCtx context.Context, msg *types.MsgCreateAsset)
 
   // Enforce minimum value requirement
   if msg.Value < 100 {
-    return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "value must be at least 100")
+    return nil, sdkerrors.ErrInvalidRequest.Wrap("value must be at least 100")
   }
 
   var asset = types.Asset{
