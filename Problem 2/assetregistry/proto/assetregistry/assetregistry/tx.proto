@@ -67,7 +67,6 @@ message MsgUpdateAssetResponse {}
 message MsgDeleteAsset {
   option (cosmos.msg.v1.signer) = "creator";
   string creator = 1;
-  string owner   = 2;
   uint64 id      = 3;
 }
 

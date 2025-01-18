@@ -13,7 +13,7 @@ func (k msgServer) CreateAsset(goCtx context.Context, msg *types.MsgCreateAsset)
 	var asset = types.Asset{
 		Name:        msg.Name,
 		Description: msg.Description,
-		Owner:       msg.Owner,
+		Owner:       msg.Creator,
 		Value:       msg.Value,
 	}
 	id := k.AppendAsset(ctx, asset)
